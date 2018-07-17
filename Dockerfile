@@ -1,11 +1,10 @@
-FROM ubuntu:latest
+FROM alpine:latest
 
-RUN apt-get update
-RUN apt-get -y --no-install-recommends install vlc && rm -rf /var/lib/apt/lists/*
-ADD startvlc.sh /usr/local/bin/startvlc.sh
+copy startvlc.sh /usr/local/bin/startvlc.sh
 ENV PASSWORD=changeme
 ENV RC_PORT=2255
-RUN useradd vlc
+RUN apk add vlc bash
+RUN adduser -D vlc
 USER vlc
 
 ENTRYPOINT ["/usr/local/bin/startvlc.sh"]
