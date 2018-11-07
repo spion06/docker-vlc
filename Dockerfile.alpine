@@ -1,0 +1,12 @@
+FROM alpine:latest
+
+copy startvlc.sh /usr/local/bin/startvlc.sh
+ENV PASSWORD=changeme
+ENV RC_PORT=2255
+COPY apk/x86_64/ /tmp/vlc-apk
+#RUN apk add vlc bash gnutls ca-certificates
+RUN apk add --allow-untrusted bash ca-certificates /tmp/vlc-apk/*
+#RUN adduser -D vlc
+USER vlc
+
+ENTRYPOINT ["/usr/local/bin/startvlc.sh"]

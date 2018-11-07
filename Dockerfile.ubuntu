@@ -1,10 +1,11 @@
-FROM alpine:latest
+FROM debian:unstable-slim
 
 copy startvlc.sh /usr/local/bin/startvlc.sh
 ENV PASSWORD=changeme
 ENV RC_PORT=2255
-RUN apk add vlc bash
-RUN adduser -D vlc
+RUN apt-get update
+RUN apt-get -y install vlc
+RUN useradd vlc
 USER vlc
 
 ENTRYPOINT ["/usr/local/bin/startvlc.sh"]
